@@ -605,7 +605,7 @@ namespace Valve.VR.InteractionSystem
                     HandDebugLog("DetachObject " + objectToDetach);
 
                 GameObject prevTopObject = currentAttachedObject;
-
+                var tmpObj = currentAttachedObject;
 
                 if (attachedObjects[index].interactable != null)
                 {
@@ -686,6 +686,7 @@ namespace Valve.VR.InteractionSystem
                     newTopObject.SetActive(true);
                     newTopObject.SendMessage("OnHandFocusAcquired", this, SendMessageOptions.DontRequireReceiver);
                 }
+                tmpObj.GetComponent<Rigidbody>().isKinematic = false;
             }
 
             CleanUpAttachedObjectStack();
