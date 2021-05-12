@@ -5,6 +5,7 @@ using UnityEngine;
 public class OrderMan : MonoBehaviour
 {
     [SerializeField] List<string> ingredients = new List<string>(); 
+
     public GameObject OrderDisplay;
     
     List<string> Order0 = new List<string>(); 
@@ -42,7 +43,8 @@ public class OrderMan : MonoBehaviour
                 DebugTxt = DebugTxt + x.ToString();
                 DebugTxt = DebugTxt + "\n";
             }
-            OrderDisplay.GetComponent<UnityEngine.UI.Text>().text = DebugTxt;
+            // OrderDisplay.GetComponent<UnityEngine.UI.Text>().text = DebugTxt;
+            OrderDisplay.GetComponent<OrderDisplay>().DisplayOrder("Order0", Order0);
         }
         if(Order1.Count == 0) 
         {
@@ -64,7 +66,10 @@ public class OrderMan : MonoBehaviour
             } 
             Order2.Add("bun_top");
         }
+
     }
+
+
 
     void OnCollisionEnter(Collision other)
     {
