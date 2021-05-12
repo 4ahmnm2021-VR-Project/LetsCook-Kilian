@@ -108,7 +108,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7a9caab769d1f3e4096f71e8d2a12a5d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ingredient: bun_buttom
+  ingredient: bun_bottom
 --- !u!114 &4011991239886927216
 MonoBehaviour:
   m_ObjectHideFlags: 0
