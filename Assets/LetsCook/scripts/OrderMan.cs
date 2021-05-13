@@ -19,28 +19,38 @@ public class OrderMan : MonoBehaviour
     void Start()
     {
         PlaceOrder();
-        StartCoroutine(DoCheck());
+        // StartCoroutine(DoCheck());
     }
 
 
     void Update()
     {
-   
+      if (Input.GetKeyDown("c"))
+        {
+            // OrderDisplay.transform.GetComponent<OrderDisplay>().ClearOrder("Order0");
+            Debug.Log("testxt");
+            // PlaceOrder();
+        }
+        if (Input.GetKeyDown("space"))
+        {
+            // OrderDisplay.transform.GetComponent<OrderDisplay>().ClearOrder("Order0");
+            PlaceOrder();
+        }
         
     }
 
      IEnumerator DoCheck() {
         while (true) {
-            Debug.Log("Ienum");
-            yield return new WaitForSeconds(1);
-            PlaceOrder();
+            yield return new WaitForSeconds(10);
+      
         }
      }
  
 
     private void PlaceOrder() {
-        if(Order0.Count == 0) 
+        if(true) 
         {
+            Order0.Clear();
             Order0.Add("bun_bottom");
             Order0.Add("patty");
             for(var x = 0; x < difficulty; x++) 

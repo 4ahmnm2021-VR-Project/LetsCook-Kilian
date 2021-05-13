@@ -8,47 +8,49 @@ public class OrderDisplay : MonoBehaviour
 {
     // Start is called before the first frame update
     public GameObject Order0;
-
-
     public GameObject Order1;
     public GameObject Order2;
     [SerializeField] List<GameObject> ingredientIMGS = new List<GameObject>(); 
 
     public void DisplayOrder(string orderName, List<string> order) {
-
         var counter = 0;
         if(orderName == "Order0") {
             ClearOrder("Order0");
             foreach(var item in order) {
                 var ingredient = GetIngredient(item);
-                Debug.Log("Order0: " + ingredient);
-                SpawnImage(Order0, ingredient, counter);
-                counter ++;    
+                // Debug.Log("Order0: " + ingredient);
+                StartCoroutine(SpawnImage(Order0, ingredient, counter));
+                counter ++;   
             } 
         }
         if(orderName == "Order1") {
             ClearOrder("Order1");
             foreach(var item in order) {
                 var ingredient = GetIngredient(item);
-                Debug.Log("Order1: " + ingredient);
-                SpawnImage(Order1, ingredient, counter);
+                // Debug.Log("Order1: " + ingredient);
+                StartCoroutine(SpawnImage(Order1, ingredient, counter));
                 counter ++;    
             } 
         }
         if(orderName == "Order2") {
             ClearOrder("Order2");
+     
             foreach(var item in order) {
                 var ingredient = GetIngredient(item);
-                Debug.Log("Order2: " + ingredient);
-                SpawnImage(Order2, ingredient, counter);
+                // Debug.Log("Order2: " + ingredient);
+                 StartCoroutine(SpawnImage(Order2, ingredient, counter));
                 counter ++;  
 
             } 
+      
         }
     }
 
-    public void SpawnImage(GameObject OrderOBJ, GameObject prefap, int counter) {
+    IEnumerator SpawnImage(GameObject OrderOBJ, GameObject prefap, int counter) {
+        yield return new WaitForSeconds(0.05f);
         bool spawnLock = false;
+ 
+
         foreach(Transform child in OrderOBJ.transform) {
             if(child.childCount == 0) {
                 var pref = Instantiate(prefap, new Vector3(0f, 0f, 0f), Quaternion.identity);
@@ -65,7 +67,7 @@ public class OrderDisplay : MonoBehaviour
 
     public GameObject GetIngredient(string ingredientName) {
         string name = "img_" + ingredientName;
-        Debug.Log("#######################" + name + "############################");
+        // Debug.Log("#######################" + name + "############################");
         return ingredientIMGS.Where(obj => obj.name == name).SingleOrDefault();
     }
 
