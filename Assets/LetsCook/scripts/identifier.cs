@@ -50,11 +50,13 @@ public class identifier : MonoBehaviour
     }
 
     private void SpawnEntity(GameObject target, GameObject ingredientStack) {
+            // return ingredientIMGS.Where(obj => obj.name == name).SingleOrDefault();
             var Entity = this.gameObject;
             Entity.GetComponent<Rigidbody>().isKinematic = true;
             var spawn = Instantiate(Entity, target.transform.position, target.transform.rotation);
             // spawn.GetComponent<Rigidbody>().isKinematic = true;
             spawn.transform.parent = ingredientStack.transform;
+            spawn.name = spawn.name.Replace("(Clone)", "");
             Destroy(this.gameObject);
     }
 

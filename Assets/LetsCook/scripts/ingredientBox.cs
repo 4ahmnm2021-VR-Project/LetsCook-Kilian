@@ -16,6 +16,7 @@ public class ingredientBox : MonoBehaviour
         if(spawnPoint.transform.childCount < 1) {
             var entity = Instantiate(suply, spawnPoint.transform.position, spawnPoint.transform.rotation);
             entity.transform.parent = spawnPoint.transform;
+            entity.name = entity.name.Replace("(Clone)", "");
         }
         
     }

@@ -10,6 +10,8 @@ public class OrderDisplay : MonoBehaviour
     public GameObject Order0;
     public GameObject Order1;
     public GameObject Order2;
+
+    public Text OrdersCompletd;
     [SerializeField] List<GameObject> ingredientIMGS = new List<GameObject>(); 
 
     public void DisplayOrder(string orderName, List<string> order) {
@@ -93,5 +95,9 @@ public class OrderDisplay : MonoBehaviour
                 }
             } 
         }
+    }
+
+    public void SetScore(int score) {
+        OrdersCompletd.text = score.ToString();
     }
 }

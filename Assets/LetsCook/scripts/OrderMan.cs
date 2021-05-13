@@ -7,6 +7,10 @@ public class OrderMan : MonoBehaviour
 {
     [SerializeField] List<string> ingredients = new List<string>(); 
 
+    [SerializeField] List<GameObject> ingredientsOBJ = new List<GameObject>(); 
+
+    public Text DebugText;
+    public string DebugMSG;
     public GameObject OrderDisplay;
     
     List<string> Order0 = new List<string>(); 
@@ -25,17 +29,19 @@ public class OrderMan : MonoBehaviour
     public Slider SliderOrder0;
     public Slider SliderOrder1;
     public Slider SliderOrder2;
+
+    public int CompletedOrders = 0;
     
     
     void Start()
     {
+   
         Order0TimeLeft = GeneralOrderTime;
         Order1TimeLeft = GeneralOrderTime;
         Order2TimeLeft = GeneralOrderTime;
         PlaceOrder("Order0");
         PlaceOrder("Order1");
         PlaceOrder("Order2");
-        // StartCoroutine(DoCheck());
     }
 
 
@@ -43,7 +49,6 @@ public class OrderMan : MonoBehaviour
     {
         if (Input.GetKeyDown("space"))
         {
-    
             PlaceOrder("Order0");
         }
 
@@ -134,90 +139,86 @@ public class OrderMan : MonoBehaviour
             var ingredientStack = other.gameObject.transform.Find("ingredientStack").gameObject;
             if(ingredientStack.transform.childCount > 0) 
             {
-                var x = 0;
-                var Order0Complete = true;
-                var Order1Complete = true;
-                var Order2Complete = true;
-                Debug.Log("ingredient count of Order: " + Order0.Count + " | DeliveryCount: " + ingredientStack.transform.childCount);
-                if(Order0.Count != ingredientStack.transform.childCount) {
-                    Order0Complete = false;
-                } else {
-                    foreach(Transform child in ingredientStack.transform)
-                    {
-                        Debug.Log("Child: " + child.transform.GetComponent<identifier>().ingredient + " | ingredient: " + Order0[x]);
-                        if(Order0[x] != child.transform.GetComponent<identifier>().ingredient) 
-                        {
-                            Debug.Log("false");
-                            Order0Complete = false;
-                        } else {
-                            Debug.Log("true");
-                        }
-                        x++;
-                    }
-                }
+                
+               var Order0Complete = StartCoroutine(CheckOrderData(ingredientStack, Order0));
+               var Order1Complete = StartCoroutine(CheckOrderData(ingredientStack, Order1));
+               var Order2Complete = StartCoroutine(CheckOrderData(ingredientStack, Order2));
                 
                
-                
-                // x = 0;
-     
-                // foreach(Transform child in ingredientStack.transform)
-                // {
-                //     if(Order1[x] != child.transform.GetComponent<identifier>().ingredient) 
-                //     {
-                //         Order1Complete = false;
-                //     }
-                //     x++;
-                // }
-                
-                // x = 0;
-    
-                // foreach(Transform child in ingredientStack.transform)
-                // {
-                //     if(Order2[x] != child.transform.GetComponent<identifier>().ingredient) 
-                //     {
-                //         Order2Complete = false;
-                //     }
-                //     x++;
-                // }
-
+            
                 if(Order0Complete == true)
                 {
-                    Debug.Log("Order 0 is Right!");
-                } else {
-                    Debug.Log("Oder 0 is Wrong!");
+                    OrderCompleted(other.gameObject);
+                    Debug.Log("Order 0 is Complete");
+                    PlaceOrder("Order0");
+                } 
+                
+                else if(Order1Complete == true) 
+                {
+                    OrderCompleted(other.gameObject);
+                    Debug.Log("Order 1 is Complete");
+                    PlaceOrder("Order1");
+                } 
+                else if(Order2Complete == true) 
+                {
+                    OrderCompleted(other.gameObject);
+                    Debug.Log("Order 2 is Complete");
+                    PlaceOrder("Order2");
+                }
+                else {
                     Destroy(other.gameObject);
                 }
-                // if(Order1Complete == true)
-                // {
-                    
-                // } else {
-                //     Debug.Log("Oder 1 is Wrong!");
-                //     Destroy(other.gameObject);
-                // }
-                // if(Order2Complete == true)
-                // {
-                    
-                // } else {
-                //     Debug.Log("Oder 2 is Wrong!");
-                //     Destroy(other.gameObject);
-                // }
-
+    
 
 
             }
         }
 
     }
-}
-        // Order Original
 
-        // if(Order2.Count == 0) 
-        // {
-        //     Order2.Add("bun_bottom");
-        //     Order2.Add("patty");
-        //     for(var x = 0; x < difficulty; x++) 
-        //     {
-        //         Order2.Add(ingredients[Random.Range(0, ingredients.Count)]);
-        //     } 
-        //     Order2.Add("bun_top");
-        // }
+    IEnumerable CheckOrderData(GameObject ingredientStack, List<string> Order) {
+        CoroutineWithData cd = new CoroutineWithData(this, CheckOrder(ingredientStack, Order));
+        yield return cd.coroutine;
+    }
+
+    IEnumerator CheckOrder(GameObject ingredientStack, List<string> Order) {
+        yield return new WaitForSeconds(0.1f);
+        DebugMSG = "";
+        var x = 0;
+        var OrderComplete = true;
+        // Debug.Log("ingredient count of Order: " + Order0.Count + " | DeliveryCount: " + ingredientStack.transform.childCount);
+        if(Order.Count != ingredientStack.transform.childCount) {
+            OrderComplete = false;
+        } else {
+        foreach(Transform child in ingredientStack.transform)
+        {
+            // Debug.Log("Child: " + child.transform.GetComponent<identifier>().ingredient + " | ingredient: " + Order0[x]);
+            CanvasDebug(child.transform.GetComponent<identifier>().ingredient.ToString() + "  | " + Order0[x].ToString());
+            if(Order[x] != child.transform.GetComponent<identifier>().ingredient) 
+            {
+                // Debug.Log("false");
+                OrderComplete = false;
+            } else {
+                // Debug.Log("true");
+            }
+            x++;
+            }
+        }
+        if(OrderComplete == true) {
+            yield return true;              
+        } else {
+            yield return false;
+        }
+    }
+
+    void OrderCompleted(GameObject other) {
+        CompletedOrders ++;
+        OrderDisplay.GetComponent<OrderDisplay>().SetScore(CompletedOrders);
+        Destroy(other.gameObject);
+    }
+
+    void CanvasDebug(string log) {
+        DebugMSG = DebugMSG + "\n" + log;
+        DebugText.text = DebugMSG;
+    }
+}
