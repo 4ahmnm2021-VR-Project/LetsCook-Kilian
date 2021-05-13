@@ -17,10 +17,10 @@ public class OrderMan : MonoBehaviour
 
     private string DebugTxt;
 
-    public float GeneralOrderTime = 40f;
-    public float Order0TimeLeft = 40f;
-    public float Order1TimeLeft = 40f;
-    public float Order2TimeLeft = 40f;
+    public float GeneralOrderTime = 5f;
+    private float Order0TimeLeft;
+    private float Order1TimeLeft;
+    private float Order2TimeLeft;
 
     public Slider SliderOrder0;
     public Slider SliderOrder1;
@@ -29,6 +29,9 @@ public class OrderMan : MonoBehaviour
     
     void Start()
     {
+        Order0TimeLeft = GeneralOrderTime;
+        Order1TimeLeft = GeneralOrderTime;
+        Order2TimeLeft = GeneralOrderTime;
         PlaceOrder("Order0");
         PlaceOrder("Order1");
         PlaceOrder("Order2");
@@ -56,10 +59,10 @@ public class OrderMan : MonoBehaviour
             PlaceOrder("Order0");
         }
         if(Order1TimeLeft < 0) {
-            
+            PlaceOrder("Order1");
         }
         if(Order2TimeLeft < 0) {
-            
+            PlaceOrder("Order2");
         }
         
     }
