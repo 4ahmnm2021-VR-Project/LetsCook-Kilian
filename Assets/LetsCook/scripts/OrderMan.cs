@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class OrderMan : MonoBehaviour
 {
@@ -15,40 +16,63 @@ public class OrderMan : MonoBehaviour
     public int difficulty;
 
     private string DebugTxt;
+
+    public float Order0TimeLeft = 40f;
+    public float Order1TimeLeft = 40f;
+    public float Order2TimeLeft = 40f;
+
+    public Slider SliderOrder0;
+    public Slider SliderOrder1;
+    public Slider SliderOrder2;
+    
     
     void Start()
     {
-        PlaceOrder();
+        PlaceOrder("Order0");
+        PlaceOrder("Order1");
+        PlaceOrder("Order2");
         // StartCoroutine(DoCheck());
     }
 
 
     void Update()
     {
-      if (Input.GetKeyDown("c"))
-        {
-            // OrderDisplay.transform.GetComponent<OrderDisplay>().ClearOrder("Order0");
-            Debug.Log("testxt");
-            // PlaceOrder();
-        }
         if (Input.GetKeyDown("space"))
         {
-            // OrderDisplay.transform.GetComponent<OrderDisplay>().ClearOrder("Order0");
-            PlaceOrder();
+    
+            PlaceOrder("Order0");
+        }
+
+
+        Order0TimeLeft -= Time.deltaTime;
+        Order1TimeLeft -= Time.deltaTime;
+        Order2TimeLeft -= Time.deltaTime;
+        SliderOrder0.value = ValueConverter(Order0TimeLeft, 40f);
+        SliderOrder1.value = ValueConverter(Order1TimeLeft, 40f);
+        SliderOrder2.value = ValueConverter(Order2TimeLeft, 40f);
+
+        if(Order0TimeLeft < 0) {
+
+        }
+        if(Order1TimeLeft < 0) {
+            
+        }
+        if(Order2TimeLeft < 0) {
+            
         }
         
     }
 
-     IEnumerator DoCheck() {
-        while (true) {
-            yield return new WaitForSeconds(10);
-      
-        }
-     }
- 
+    
+    public float ValueConverter(float time, float startTime) {
+        float a = startTime / 100;
+        float b = time / a;
+        float result = b / 100;
+        return result;
+    }
 
-    private void PlaceOrder() {
-        if(true) 
+    private void PlaceOrder(string OrderName) {
+        if(OrderName == "Order0") 
         {
             Order0.Clear();
             Order0.Add("bun_bottom");
@@ -67,7 +91,7 @@ public class OrderMan : MonoBehaviour
             // OrderDisplay.GetComponent<UnityEngine.UI.Text>().text = DebugTxt;
             OrderDisplay.GetComponent<OrderDisplay>().DisplayOrder("Order0", Order0);
         }
-        if(Order1.Count == 0) 
+        if(OrderName == "Order1") 
         {
             Order1.Add("bun_bottom");
             Order1.Add("patty");
@@ -78,7 +102,7 @@ public class OrderMan : MonoBehaviour
             Order1.Add("bun_top");
             OrderDisplay.GetComponent<OrderDisplay>().DisplayOrder("Order1", Order1);
         }
-        if(Order2.Count == 0) 
+        if(OrderName == "Order2") 
         {
             Order2.Add("bun_bottom");
             Order2.Add("patty");
