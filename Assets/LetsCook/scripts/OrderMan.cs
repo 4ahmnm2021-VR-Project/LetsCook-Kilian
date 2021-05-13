@@ -17,6 +17,7 @@ public class OrderMan : MonoBehaviour
 
     private string DebugTxt;
 
+    public float GeneralOrderTime = 40f;
     public float Order0TimeLeft = 40f;
     public float Order1TimeLeft = 40f;
     public float Order2TimeLeft = 40f;
@@ -47,12 +48,12 @@ public class OrderMan : MonoBehaviour
         Order0TimeLeft -= Time.deltaTime;
         Order1TimeLeft -= Time.deltaTime;
         Order2TimeLeft -= Time.deltaTime;
-        SliderOrder0.value = ValueConverter(Order0TimeLeft, 40f);
-        SliderOrder1.value = ValueConverter(Order1TimeLeft, 40f);
-        SliderOrder2.value = ValueConverter(Order2TimeLeft, 40f);
+        SliderOrder0.value = ValueConverter(Order0TimeLeft, GeneralOrderTime);
+        SliderOrder1.value = ValueConverter(Order1TimeLeft, GeneralOrderTime);
+        SliderOrder2.value = ValueConverter(Order2TimeLeft, GeneralOrderTime);
 
         if(Order0TimeLeft < 0) {
-
+            PlaceOrder("Order0");
         }
         if(Order1TimeLeft < 0) {
             
@@ -74,6 +75,7 @@ public class OrderMan : MonoBehaviour
     private void PlaceOrder(string OrderName) {
         if(OrderName == "Order0") 
         {
+            Order0TimeLeft = GeneralOrderTime;
             Order0.Clear();
             Order0.Add("bun_bottom");
             Order0.Add("patty");
@@ -93,6 +95,8 @@ public class OrderMan : MonoBehaviour
         }
         if(OrderName == "Order1") 
         {
+            Order1TimeLeft = GeneralOrderTime;
+            Order1.Clear();
             Order1.Add("bun_bottom");
             Order1.Add("patty");
             for(var x = 0; x < difficulty; x++) 
@@ -104,6 +108,8 @@ public class OrderMan : MonoBehaviour
         }
         if(OrderName == "Order2") 
         {
+            Order2TimeLeft = GeneralOrderTime;
+            Order2.Clear();
             Order2.Add("bun_bottom");
             Order2.Add("patty");
             for(var x = 0; x < difficulty; x++) 
