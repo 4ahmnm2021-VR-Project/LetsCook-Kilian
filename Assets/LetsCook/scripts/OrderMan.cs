@@ -19,13 +19,24 @@ public class OrderMan : MonoBehaviour
     void Start()
     {
         PlaceOrder();
+        StartCoroutine(DoCheck());
     }
 
 
     void Update()
     {
+   
         
     }
+
+     IEnumerator DoCheck() {
+        while (true) {
+            Debug.Log("Ienum");
+            yield return new WaitForSeconds(1);
+            PlaceOrder();
+        }
+     }
+ 
 
     private void PlaceOrder() {
         if(Order0.Count == 0) 
@@ -39,7 +50,7 @@ public class OrderMan : MonoBehaviour
             Order0.Add("bun_top");
             DebugTxt = "";
             foreach( var x in Order0) {
-                Debug.Log( x.ToString());
+                // Debug.Log( x.ToString());
                 DebugTxt = DebugTxt + x.ToString();
                 DebugTxt = DebugTxt + "\n";
             }
@@ -55,6 +66,7 @@ public class OrderMan : MonoBehaviour
                 Order1.Add(ingredients[Random.Range(0, ingredients.Count)]);
             } 
             Order1.Add("bun_top");
+            OrderDisplay.GetComponent<OrderDisplay>().DisplayOrder("Order1", Order1);
         }
         if(Order2.Count == 0) 
         {
@@ -65,6 +77,7 @@ public class OrderMan : MonoBehaviour
                 Order2.Add(ingredients[Random.Range(0, ingredients.Count)]);
             } 
             Order2.Add("bun_top");
+            OrderDisplay.GetComponent<OrderDisplay>().DisplayOrder("Order2", Order2);
         }
 
     }
