@@ -134,15 +134,16 @@ public class OrderMan : MonoBehaviour
 
     void OnCollisionEnter(Collision other)
     {
-
+  
         if(other.gameObject.name == "plate") {
             var ingredientStack = other.gameObject.transform.Find("ingredientStack").gameObject;
             if(ingredientStack.transform.childCount > 0) 
             {
                 
-               var Order0Complete = StartCoroutine(CheckOrderData(ingredientStack, Order0));
-               var Order1Complete = StartCoroutine(CheckOrderData(ingredientStack, Order1));
-               var Order2Complete = StartCoroutine(CheckOrderData(ingredientStack, Order2));
+                var Order0Complete = CheckOrder(ingredientStack, Order0);
+              
+                var Order1Complete = CheckOrder(ingredientStack, Order1);
+                var Order2Complete = CheckOrder(ingredientStack, Order2);
                 
                
             
@@ -176,13 +177,8 @@ public class OrderMan : MonoBehaviour
 
     }
 
-    IEnumerable CheckOrderData(GameObject ingredientStack, List<string> Order) {
-        CoroutineWithData cd = new CoroutineWithData(this, CheckOrder(ingredientStack, Order));
-        yield return cd.coroutine;
-    }
 
-    IEnumerator CheckOrder(GameObject ingredientStack, List<string> Order) {
-        yield return new WaitForSeconds(0.1f);
+    bool CheckOrder(GameObject ingredientStack, List<string> Order) {
         DebugMSG = "";
         var x = 0;
         var OrderComplete = true;
@@ -204,11 +200,8 @@ public class OrderMan : MonoBehaviour
             x++;
             }
         }
-        if(OrderComplete == true) {
-            yield return true;              
-        } else {
-            yield return false;
-        }
+        
+        return OrderComplete;
     }
 
     void OrderCompleted(GameObject other) {
