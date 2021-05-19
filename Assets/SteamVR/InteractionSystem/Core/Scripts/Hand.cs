@@ -687,6 +687,9 @@ namespace Valve.VR.InteractionSystem
                     newTopObject.SendMessage("OnHandFocusAcquired", this, SendMessageOptions.DontRequireReceiver);
                 }
                 tmpObj.GetComponent<Rigidbody>().isKinematic = false;
+                Debug.Log("Hand Cs" + tmpObj.gameObject.tag);
+                tmpObj.gameObject.tag = "stacking";
+
             }
 
             CleanUpAttachedObjectStack();
