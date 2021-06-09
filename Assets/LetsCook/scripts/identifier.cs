@@ -8,6 +8,8 @@ public class identifier : MonoBehaviour
 
     private bool SpawnLock = false;
 
+    public GameObject inputText;
+
     void Start()
     {
         this.gameObject.tag = "ingredient";

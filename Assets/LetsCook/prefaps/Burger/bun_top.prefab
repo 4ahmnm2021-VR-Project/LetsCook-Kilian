@@ -237,6 +237,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ingredient: bun_top
+  inputText: {fileID: 0}
 --- !u!1 &8952671885574322802
 GameObject:
   m_ObjectHideFlags: 0
