@@ -6,9 +6,14 @@ public class identifier : MonoBehaviour
 {
     public string ingredient;
 
+    private bool SpawnLock = false;
+
+    public GameObject inputText;
+
     void Start()
     {
-        
+        this.gameObject.tag = "ingredient";
+        Debug.Log("Identifier " + this.gameObject.tag);
     }
 
 
@@ -21,7 +26,8 @@ public class identifier : MonoBehaviour
     {
 
         var colObj = collision.gameObject; 
-        if(collision.gameObject.tag == "stacking") {
+        Debug.Log("######################## " + collision.gameObject.tag + " ######################");
+        if(collision.gameObject.tag == "stacking" && SpawnLock == false) {
             var ingredientStack = colObj;
             var childs = 5;
             var target = colObj;
@@ -50,6 +56,8 @@ public class identifier : MonoBehaviour
     }
 
     private void SpawnEntity(GameObject target, GameObject ingredientStack) {
+            SpawnLock = true;
+            StartCoroutine(ResetLock());
             // return ingredientIMGS.Where(obj => obj.name == name).SingleOrDefault();
             var Entity = this.gameObject;
             Entity.GetComponent<Rigidbody>().isKinematic = true;
@@ -58,6 +66,11 @@ public class identifier : MonoBehaviour
             spawn.transform.parent = ingredientStack.transform;
             spawn.name = spawn.name.Replace("(Clone)", "");
             Destroy(this.gameObject);
+    }
+
+    private IEnumerator ResetLock() {
+        yield return new WaitForSeconds(1f);
+        SpawnLock = false;
     }
 
 
