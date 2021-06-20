@@ -22,7 +22,7 @@ public class cook : MonoBehaviour
     void Update() 
     {
         if(stay == true) {
-            Debug.Log("On Stove!");
+            Debug.Log("onStove");
             if(cookgrade > 500 && switchlock == false) {
                 SetCooked();
             }
@@ -33,20 +33,36 @@ public class cook : MonoBehaviour
         }
     }
 
-    // private void OnTriggerStay(Collider other)  {
-    private void OnCollisionEnter(Collision collisionInfo)  {  
-
- 
-        if(collisionInfo.gameObject.name == "stove") {
+    void OnCollisionEnter(Collision coll)
+    {
+        if(coll.transform.name == "stove") {
             smoke.Play();
             stay = true;
-        } 
+        }
     }
 
-    private void OnCollisionExit(Collision collisionInfo)  {  
-        smoke.Stop();
-        stay = false;
+    void OnCollisionExit(Collision coll)
+    {
+        if(coll.transform.name == "stove") {
+            smoke.Stop();
+            stay = false;
+        }
     }
+
+    // private void OnTriggerStay(Collider other)  {
+    // private void OnCollisionEnter(Collision collisionInfo)  {  
+
+ 
+    //     if(collisionInfo.gameObject.name == "stove") {
+    //         smoke.Play();
+    //         stay = true;
+    //     } 
+    // }
+
+    // private void OnCollisionExit(Collision collisionInfo)  {  
+    //     smoke.Stop();
+    //     stay = false;
+    // }
 
     private void SetCooked() {
         switchlock = true;

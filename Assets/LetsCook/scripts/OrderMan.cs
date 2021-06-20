@@ -172,9 +172,9 @@ public class OrderMan : MonoBehaviour
                     Debug.Log("Order 2 is Complete");
                     PlaceOrder("Order2");
                 }
-                else {
-                    Destroy(other.gameObject);
-                }
+                // else {
+                //     Destroy(other.gameObject);
+                // }
     
 
 
@@ -196,12 +196,16 @@ public class OrderMan : MonoBehaviour
         {
             // Debug.Log("Child: " + child.transform.GetComponent<identifier>().ingredient + " | ingredient: " + Order0[x]);
             CanvasDebug(child.transform.GetComponent<identifier>().ingredient.ToString() + "  | " + Order0[x].ToString());
-            if(Order[x] != child.transform.GetComponent<identifier>().ingredient) 
-            {
-                // Debug.Log("false");
-                OrderComplete = false;
+            if(Order[x] == "patty") {
+                if(child.transform.GetComponent<cook>().cooked != true) {
+                    OrderComplete = false;
+                }
             } else {
-                // Debug.Log("true");
+                if(Order[x] != child.transform.GetComponent<identifier>().ingredient) 
+                {
+                    // Debug.Log("false");
+                    OrderComplete = false;
+                } 
             }
             x++;
             }

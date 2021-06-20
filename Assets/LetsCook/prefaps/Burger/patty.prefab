@@ -17,6 +17,7 @@ GameObject:
   - component: {fileID: 7096243101190229428}
   - component: {fileID: 4684489569116061151}
   - component: {fileID: 7832784644618829466}
+  - component: {fileID: 2602557349300365443}
   m_Layer: 0
   m_Name: patty
   m_TagString: stacking
@@ -258,6 +259,19 @@ MonoBehaviour:
   burned: 0
   pattyCooked: {fileID: 2100000, guid: 25f18eca5c2cab84b904056ffed347ce, type: 2}
   pattyBurned: {fileID: 2100000, guid: 72e078facec311f41a5fd34377c6a318, type: 2}
+--- !u!65 &2602557349300365443
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4683767896984872965}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 0.0017449788, y: 0.0007787918, z: 0.0017449788}
+  m_Center: {x: 0, y: 0.00006829377, z: 9.685754e-10}
 --- !u!1 &6882067663679447876
 GameObject:
   m_ObjectHideFlags: 0
