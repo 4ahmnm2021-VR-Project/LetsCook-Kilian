@@ -13,9 +13,9 @@ public class OrderMan : MonoBehaviour
     public string DebugMSG;
     public GameObject OrderDisplay;
     
-    List<string> Order0 = new List<string>(); 
-    List<string> Order1 = new List<string>();
-    List<string> Order2 = new List<string>(); 
+    public List<string> Order0 = new List<string>(); 
+    public List<string> Order1 = new List<string>();
+    public List<string> Order2 = new List<string>(); 
 
     public int difficulty;
 
@@ -34,6 +34,8 @@ public class OrderMan : MonoBehaviour
 
     public Countdown CLOCK;
     
+    public Material defaultMat;
+    public Material errorMat;
     
     void Start()
     {
@@ -156,25 +158,24 @@ public class OrderMan : MonoBehaviour
                 if(Order0Complete == true)
                 {
                     OrderCompleted(other.gameObject);
-                    Debug.Log("Order 0 is Complete");
                     PlaceOrder("Order0");
                 } 
                 
                 else if(Order1Complete == true) 
                 {
                     OrderCompleted(other.gameObject);
-                    Debug.Log("Order 1 is Complete");
                     PlaceOrder("Order1");
                 } 
                 else if(Order2Complete == true) 
                 {
                     OrderCompleted(other.gameObject);
-                    Debug.Log("Order 2 is Complete");
                     PlaceOrder("Order2");
                 }
-                // else {
-                //     Destroy(other.gameObject);
-                // }
+                else {
+                    Destroy(other.gameObject);
+                    CompletedOrders--;
+                    StartCoroutine(ColorFlash());
+                }
     
 
 
@@ -201,9 +202,9 @@ public class OrderMan : MonoBehaviour
                     OrderComplete = false;
                 }
             } else {
+                Debug.Log(Order[x] + " | " + child.transform.GetComponent<identifier>().ingredient);
                 if(Order[x] != child.transform.GetComponent<identifier>().ingredient) 
                 {
-                    // Debug.Log("false");
                     OrderComplete = false;
                 } 
             }
@@ -215,10 +216,10 @@ public class OrderMan : MonoBehaviour
     }
 
     void OrderCompleted(GameObject other) {
+        CompletedOrders ++;
         OrderDisplay.GetComponent<OrderDisplay>().SetScore(CompletedOrders);
         Destroy(other.gameObject);
         IncreseDifficulty();
-        CompletedOrders ++;
     }
 
     void CanvasDebug(string log) {
@@ -236,5 +237,13 @@ public class OrderMan : MonoBehaviour
         if(CompletedOrders == 15) {
             difficulty++;
         }
+    }
+
+    private IEnumerator ColorFlash()
+    {
+        var rend = this.gameObject.GetComponent<Renderer>();
+        rend.material = errorMat;
+        yield return new WaitForSeconds(0.08f);
+        rend.material = defaultMat;
     }
 }
