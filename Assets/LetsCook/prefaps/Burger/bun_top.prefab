@@ -18,7 +18,7 @@ GameObject:
   - component: {fileID: 310135615839116742}
   m_Layer: 0
   m_Name: bun_top
-  m_TagString: ingredient
+  m_TagString: stacking
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

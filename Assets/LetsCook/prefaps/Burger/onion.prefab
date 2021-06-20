@@ -18,7 +18,7 @@ GameObject:
   - component: {fileID: 6387048331289950222}
   m_Layer: 0
   m_Name: onion
-  m_TagString: ingredient
+  m_TagString: stacking
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -237,6 +237,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ingredient: onion
+  inputText: {fileID: 0}
 --- !u!1 &6755671479356211376
 GameObject:
   m_ObjectHideFlags: 0

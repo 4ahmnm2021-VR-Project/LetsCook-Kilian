@@ -31,6 +31,8 @@ public class OrderMan : MonoBehaviour
     public Slider SliderOrder2;
 
     public int CompletedOrders = 0;
+
+    public Countdown CLOCK;
     
     
     void Start()
@@ -50,12 +52,16 @@ public class OrderMan : MonoBehaviour
         if (Input.GetKeyDown("space"))
         {
             PlaceOrder("Order0");
+            IncreseDifficulty();
+            CompletedOrders ++;
+            OrderDisplay.GetComponent<OrderDisplay>().SetScore(CompletedOrders);
         }
 
-
+        if(CLOCK.timeRemaining < 0) {
         Order0TimeLeft -= Time.deltaTime;
         Order1TimeLeft -= Time.deltaTime;
         Order2TimeLeft -= Time.deltaTime;
+        }
         SliderOrder0.value = ValueConverter(Order0TimeLeft, GeneralOrderTime);
         SliderOrder1.value = ValueConverter(Order1TimeLeft, GeneralOrderTime);
         SliderOrder2.value = ValueConverter(Order2TimeLeft, GeneralOrderTime);
@@ -205,13 +211,26 @@ public class OrderMan : MonoBehaviour
     }
 
     void OrderCompleted(GameObject other) {
-        CompletedOrders ++;
         OrderDisplay.GetComponent<OrderDisplay>().SetScore(CompletedOrders);
         Destroy(other.gameObject);
+        IncreseDifficulty();
+        CompletedOrders ++;
     }
 
     void CanvasDebug(string log) {
         DebugMSG = DebugMSG + "\n" + log;
         DebugText.text = DebugMSG;
+    }
+
+    public void IncreseDifficulty() {
+        if(CompletedOrders == 5) {
+            difficulty++;
+        } 
+        if(CompletedOrders == 10) {
+            difficulty++;
+        }
+        if(CompletedOrders == 15) {
+            difficulty++;
+        }
     }
 }

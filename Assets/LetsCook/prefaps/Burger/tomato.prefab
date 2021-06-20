@@ -18,7 +18,7 @@ GameObject:
   - component: {fileID: 9012253930981211756}
   m_Layer: 0
   m_Name: tomato
-  m_TagString: ingredient
+  m_TagString: stacking
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -237,6 +237,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ingredient: tomato
+  inputText: {fileID: 0}
 --- !u!1 &5701381913052491918
 GameObject:
   m_ObjectHideFlags: 0

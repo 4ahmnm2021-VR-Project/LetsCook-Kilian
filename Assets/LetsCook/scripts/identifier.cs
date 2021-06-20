@@ -12,7 +12,7 @@ public class identifier : MonoBehaviour
 
     void Start()
     {
-        this.gameObject.tag = "ingredient";
+        // this.gameObject.tag = "ingredient";
         Debug.Log("Identifier " + this.gameObject.tag);
     }
 
