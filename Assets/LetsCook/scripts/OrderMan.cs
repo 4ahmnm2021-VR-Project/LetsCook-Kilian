@@ -53,16 +53,16 @@ public class OrderMan : MonoBehaviour
 
     void Update()
     {
-        if (Input.GetKeyDown("space"))
-        {
-            PlaceOrder("Order0");
-            IncreseDifficulty();
-            CompletedOrders ++;
-            OrderDisplay.GetComponent<OrderDisplay>().SetScore(CompletedOrders);
-            if(CompletedOrders > 19) {
-                  StartCoroutine(RestartGame()); 
-            }
-        }
+        // if (Input.GetKeyDown("space"))
+        // {
+        //     PlaceOrder("Order0");
+        //     IncreseDifficulty();
+        //     CompletedOrders ++;
+        //     OrderDisplay.GetComponent<OrderDisplay>().SetScore(CompletedOrders);
+        //     if(CompletedOrders > 19) {
+        //           StartCoroutine(RestartGame()); 
+        //     }
+        // }
 
         if(CLOCK.timeRemaining < 0) {
         Order0TimeLeft -= Time.deltaTime;
