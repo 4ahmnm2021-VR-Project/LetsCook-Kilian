@@ -7,13 +7,29 @@ public class Countdown : MonoBehaviour
 {
     // Start is called before the first frame update
     public float time;
-    public float timeRemaining = 10f;
+    public float trueTime;
+
+    public int pretime = 10;
+    public float timeRemaining;
     private Text counterTxt;
     private GameObject CounterText;
 
     public GameObject OrdersScreen;
+
+    public bool gameStarted = false;
+
+    public int trueMinutes;
+    public int trueSeconds;
+
+    public double trueZehntel; 
+
+    public Text Minutes;
+    public Text Seconds;
+
+    public Text Zehntel;
     void Start()
     {
+        timeRemaining = pretime;
         counterTxt = GameObject.Find("CounterTxt").GetComponent<Text>();
         CounterText = GameObject.Find("CounterTxt");
     }
@@ -23,11 +39,29 @@ public class Countdown : MonoBehaviour
     {
         timeRemaining -= Time.deltaTime;
         time += Time.deltaTime;
+        trueTime = time - 10f;
         var timeConv = (int)timeRemaining;
         counterTxt.text = timeConv.ToString();
-        if(timeRemaining < 0 && OrdersScreen.active == false) {
+        if(timeRemaining < 0 && gameStarted == false) {
             OrdersScreen.SetActive(true);
             CounterText.SetActive(false);
+            gameStarted = true;
+        }
+
+        if(trueTime > 0) {
+            trueSeconds = (int)trueTime;
+            trueZehntel = trueTime - (int)trueTime;
+            trueZehntel = trueZehntel * 100;
+            if(trueSeconds > 60) {
+                trueMinutes = Mathf.RoundToInt(trueSeconds / 60);
+                trueSeconds = trueSeconds - trueMinutes * 60;
+                var outputMinutes = trueMinutes.ToString("00");
+                Minutes.text = outputMinutes;
+            }
+            var outputSeconds = trueSeconds.ToString("00");
+            Seconds.text = outputSeconds;
+            var outputZehntel = trueZehntel.ToString("00");
+            Zehntel.text = outputZehntel;
         }
     }
 }

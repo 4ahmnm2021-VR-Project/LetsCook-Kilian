@@ -198,9 +198,11 @@ public class OrderMan : MonoBehaviour
             // Debug.Log("Child: " + child.transform.GetComponent<identifier>().ingredient + " | ingredient: " + Order0[x]);
             CanvasDebug(child.transform.GetComponent<identifier>().ingredient.ToString() + "  | " + Order0[x].ToString());
             if(Order[x] == "patty") {
-                if(child.transform.GetComponent<cook>().cooked != true) {
-                    OrderComplete = false;
-                }
+                if(child.transform.name == "patty") {
+                    if(child.transform.GetComponent<cook>().cooked != true) {
+                        OrderComplete = false;
+                    }
+                } else {OrderComplete = false;}
             } else {
                 Debug.Log(Order[x] + " | " + child.transform.GetComponent<identifier>().ingredient);
                 if(Order[x] != child.transform.GetComponent<identifier>().ingredient) 
