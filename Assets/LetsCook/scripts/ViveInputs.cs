@@ -11,11 +11,17 @@ public class ViveInputs : MonoBehaviour
     public GameObject IntroPanel; 
 
     public Countdown CLOCK;
+
+    public OrderMan OrderMan;
     void Update()
     {
         if(SteamVR_Actions._default.Squeeze.GetAxis(hand) == 1) {
             CLOCK.IntroDone = true;
             IntroPanel.SetActive(false);
+            if(CLOCK.scoreDisplayed == true) {
+                CLOCK.scoreDisplayed = false;
+                OrderMan.ReloadGame();
+            }
         }
         if (Input.GetKeyDown("space"))
         {

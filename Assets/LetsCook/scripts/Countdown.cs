@@ -35,6 +35,8 @@ public class Countdown : MonoBehaviour
     public Text Zehntel;
 
     public bool IntroDone = false;
+
+    public bool scoreDisplayed = false;
     void Start()
     {
         timeRemaining = pretime;
@@ -76,6 +78,7 @@ public class Countdown : MonoBehaviour
     }
 
     public void ShowScore() {
+        scoreDisplayed = true;
         Debug.Log(trueTime);
         ScoreText.SetActive(true);
         OrdersScreen.SetActive(false);

@@ -59,7 +59,7 @@ public class OrderMan : MonoBehaviour
             IncreseDifficulty();
             CompletedOrders ++;
             OrderDisplay.GetComponent<OrderDisplay>().SetScore(CompletedOrders);
-            if(CompletedOrders > 5) {
+            if(CompletedOrders > 19) {
                   StartCoroutine(RestartGame()); 
             }
         }
@@ -244,15 +244,15 @@ public class OrderMan : MonoBehaviour
     }
 
     public void IncreseDifficulty() {
-        if(CompletedOrders == 5) {
+        if(CompletedOrders == 5 && difficulty == 1) {
             difficulty++;
             GeneralOrderTime = GeneralOrderTime * TimeMultiplicator;
         } 
-        if(CompletedOrders == 10) {
+        if(CompletedOrders == 10 && difficulty == 2) {
             difficulty++;
             GeneralOrderTime = GeneralOrderTime * TimeMultiplicator;
         }
-        if(CompletedOrders == 15) {
+        if(CompletedOrders == 15 && difficulty == 3) {
             difficulty++;
             GeneralOrderTime = GeneralOrderTime * TimeMultiplicator;
         }
@@ -268,7 +268,13 @@ public class OrderMan : MonoBehaviour
 
     public IEnumerator  RestartGame() {
         CLOCK.ShowScore();
-        yield return new WaitForSeconds(5f);
+        yield return new WaitForSeconds(20f);
+        ReloadGame();
+
+    }
+
+    public void ReloadGame() {
         SceneManager.LoadScene( SceneManager.GetActiveScene().name );
+
     }
 }

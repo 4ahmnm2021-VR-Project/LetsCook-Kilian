@@ -259,6 +259,7 @@ MonoBehaviour:
   burned: 0
   pattyCooked: {fileID: 2100000, guid: 25f18eca5c2cab84b904056ffed347ce, type: 2}
   pattyBurned: {fileID: 2100000, guid: 72e078facec311f41a5fd34377c6a318, type: 2}
+  cookTime: 0
 --- !u!65 &2602557349300365443
 BoxCollider:
   m_ObjectHideFlags: 0

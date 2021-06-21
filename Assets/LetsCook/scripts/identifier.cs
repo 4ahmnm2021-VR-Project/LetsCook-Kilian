@@ -1,7 +1,8 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+using Valve.VR;
+using Valve.VR.InteractionSystem;
 public class identifier : MonoBehaviour
 {
     public string ingredient;
@@ -65,6 +66,7 @@ public class identifier : MonoBehaviour
             // spawn.GetComponent<Rigidbody>().isKinematic = true;
             spawn.transform.parent = ingredientStack.transform;
             spawn.name = spawn.name.Replace("(Clone)", "");
+            spawn.gameObject.AddComponent<IgnoreHovering>();
             Destroy(this.gameObject);
     }
 
