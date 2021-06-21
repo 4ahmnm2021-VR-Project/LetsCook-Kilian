@@ -7,11 +7,22 @@ using Valve.VR;
 public class ViveInputs : MonoBehaviour
 {
     public SteamVR_Input_Sources hand;
+
+    public GameObject IntroPanel; 
+
+    public Countdown CLOCK;
     void Update()
     {
-        if(SteamVR_Actions._default.Teleport.GetStateDown(hand)) {
-            Debug.Log("Telepot Pressed");
+        if(SteamVR_Actions._default.Squeeze.GetAxis(hand) == 1) {
+            CLOCK.IntroDone = true;
+            IntroPanel.SetActive(false);
         }
+        if (Input.GetKeyDown("space"))
+        {
+            CLOCK.IntroDone = true;
+            IntroPanel.SetActive(false);
+        }
+
         
     }
 }

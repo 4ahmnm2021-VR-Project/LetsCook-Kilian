@@ -14,6 +14,8 @@ public class cook : MonoBehaviour
     private bool switchlockBurn = false;
     private bool stay = false;
 
+    public float cookTime;
+
 
     void Start() {
         smoke.Stop();
@@ -23,13 +25,13 @@ public class cook : MonoBehaviour
     {
         if(stay == true) {
             Debug.Log("onStove");
-            if(cookgrade > 500 && switchlock == false) {
+            if(cookTime > 5 && switchlock == false) {
                 SetCooked();
             }
-            if(cookgrade > 1000 &&  switchlockBurn == false) {
+            if(cookTime > 20 &&  switchlockBurn == false) {
                 SetBurned();
             }
-            cookgrade ++;
+            cookTime += Time.deltaTime;
         }
     }
 

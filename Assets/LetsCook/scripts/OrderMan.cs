@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-
+using UnityEngine.SceneManagement;
 public class OrderMan : MonoBehaviour
 {
     [SerializeField] List<string> ingredients = new List<string>(); 
@@ -21,7 +21,9 @@ public class OrderMan : MonoBehaviour
 
     private string DebugTxt;
 
-    public float GeneralOrderTime = 5f;
+    private float GeneralOrderTime = 50f;
+
+    private float TimeMultiplicator = 1.3f;
     private float Order0TimeLeft;
     private float Order1TimeLeft;
     private float Order2TimeLeft;
@@ -57,6 +59,9 @@ public class OrderMan : MonoBehaviour
             IncreseDifficulty();
             CompletedOrders ++;
             OrderDisplay.GetComponent<OrderDisplay>().SetScore(CompletedOrders);
+            if(CompletedOrders > 5) {
+                  StartCoroutine(RestartGame()); 
+            }
         }
 
         if(CLOCK.timeRemaining < 0) {
@@ -70,17 +75,23 @@ public class OrderMan : MonoBehaviour
 
         if(Order0TimeLeft < 0) {
             PlaceOrder("Order0");
+            OrderExpired();
         }
         if(Order1TimeLeft < 0) {
             PlaceOrder("Order1");
+            OrderExpired();
         }
         if(Order2TimeLeft < 0) {
             PlaceOrder("Order2");
+            OrderExpired();
         }
         
     }
 
-    
+    private void OrderExpired() {
+        CompletedOrders--;
+        OrderDisplay.GetComponent<OrderDisplay>().SetScore(CompletedOrders);
+    }
     public float ValueConverter(float time, float startTime) {
         float a = startTime / 100;
         float b = time / a;
@@ -222,6 +233,9 @@ public class OrderMan : MonoBehaviour
         OrderDisplay.GetComponent<OrderDisplay>().SetScore(CompletedOrders);
         Destroy(other.gameObject);
         IncreseDifficulty();
+        if(CompletedOrders > 19) {
+            StartCoroutine(RestartGame()); 
+        }
     }
 
     void CanvasDebug(string log) {
@@ -232,12 +246,15 @@ public class OrderMan : MonoBehaviour
     public void IncreseDifficulty() {
         if(CompletedOrders == 5) {
             difficulty++;
+            GeneralOrderTime = GeneralOrderTime * TimeMultiplicator;
         } 
         if(CompletedOrders == 10) {
             difficulty++;
+            GeneralOrderTime = GeneralOrderTime * TimeMultiplicator;
         }
         if(CompletedOrders == 15) {
             difficulty++;
+            GeneralOrderTime = GeneralOrderTime * TimeMultiplicator;
         }
     }
 
@@ -247,5 +264,11 @@ public class OrderMan : MonoBehaviour
         rend.material = errorMat;
         yield return new WaitForSeconds(0.08f);
         rend.material = defaultMat;
+    }
+
+    public IEnumerator  RestartGame() {
+        CLOCK.ShowScore();
+        yield return new WaitForSeconds(5f);
+        SceneManager.LoadScene( SceneManager.GetActiveScene().name );
     }
 }

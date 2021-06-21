@@ -9,12 +9,18 @@ public class Countdown : MonoBehaviour
     public float time;
     public float trueTime;
 
-    public int pretime = 10;
+    private int pretime = 15;
     public float timeRemaining;
     private Text counterTxt;
+
+    public Text scoreMin;
+    public Text scoreSec;
+    public Text scoreZent;
     private GameObject CounterText;
 
     public GameObject OrdersScreen;
+
+    public GameObject ScoreText;
 
     public bool gameStarted = false;
 
@@ -27,6 +33,8 @@ public class Countdown : MonoBehaviour
     public Text Seconds;
 
     public Text Zehntel;
+
+    public bool IntroDone = false;
     void Start()
     {
         timeRemaining = pretime;
@@ -37,18 +45,40 @@ public class Countdown : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        timeRemaining -= Time.deltaTime;
-        time += Time.deltaTime;
-        trueTime = time - 10f;
-        var timeConv = (int)timeRemaining;
-        counterTxt.text = timeConv.ToString();
-        if(timeRemaining < 0 && gameStarted == false) {
-            OrdersScreen.SetActive(true);
-            CounterText.SetActive(false);
-            gameStarted = true;
-        }
+        if(IntroDone) {
+            timeRemaining -= Time.deltaTime;
+            time += Time.deltaTime;
+            trueTime = time - pretime;
+            var timeConv = (int)timeRemaining;
+            counterTxt.text = timeConv.ToString();
+            if(timeRemaining < 0 && gameStarted == false) {
+                OrdersScreen.SetActive(true);
+                CounterText.SetActive(false);
+                gameStarted = true;
+            }
 
-        if(trueTime > 0) {
+            if(trueTime > 0) {
+                trueSeconds = (int)trueTime;
+                trueZehntel = trueTime - (int)trueTime;
+                trueZehntel = trueZehntel * 100;
+                if(trueSeconds > 60) {
+                    trueMinutes = Mathf.RoundToInt(trueSeconds / 60);
+                    trueSeconds = trueSeconds - trueMinutes * 60;
+                    var outputMinutes = trueMinutes.ToString("00");
+                    Minutes.text = outputMinutes;
+                }
+                var outputSeconds = trueSeconds.ToString("00");
+                Seconds.text = outputSeconds;
+                var outputZehntel = trueZehntel.ToString("00");
+                Zehntel.text = outputZehntel;
+            }
+        }
+    }
+
+    public void ShowScore() {
+        Debug.Log(trueTime);
+        ScoreText.SetActive(true);
+        OrdersScreen.SetActive(false);
             trueSeconds = (int)trueTime;
             trueZehntel = trueTime - (int)trueTime;
             trueZehntel = trueZehntel * 100;
@@ -56,12 +86,11 @@ public class Countdown : MonoBehaviour
                 trueMinutes = Mathf.RoundToInt(trueSeconds / 60);
                 trueSeconds = trueSeconds - trueMinutes * 60;
                 var outputMinutes = trueMinutes.ToString("00");
-                Minutes.text = outputMinutes;
+                scoreMin.text = outputMinutes;
             }
             var outputSeconds = trueSeconds.ToString("00");
-            Seconds.text = outputSeconds;
+            scoreSec.text = outputSeconds;
             var outputZehntel = trueZehntel.ToString("00");
-            Zehntel.text = outputZehntel;
-        }
+            scoreZent.text = outputZehntel;
     }
 }
